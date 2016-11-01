@@ -16,6 +16,7 @@ public class GameView {
     public void init() {
         canvas = new JPanel() {
             @Override
+            //这个回调会自动获取当前 Window 的 graphics
             protected void paintComponent(Graphics graphics) {
                 drawGridBackground(graphics);
                 drawSnake(graphics, grid.getSnake());
@@ -33,30 +34,30 @@ public class GameView {
     }
 
     private void drawFood(Graphics graphics, Node food) {
-        drawSquare(graphics, food, Settings.DEFAULT_FOOD_COLOR);
+        drawSquare(graphics, food, Settings.FOOD_COLOR);
     }
 
     private void drawSnake(Graphics graphics, Snake snake) {
-        drawCircle(graphics, snake.getHead(), Settings.DEFAULT_SNAKE_HEAD_COLOR);
-        for (int i = 1; i < snake.getBody().size(); i++) {
-            drawCircle(graphics, snake.getBody().get(i), Settings.DEFAULT_SNAKE_BODY_COLOR);
+        for (Node node : snake.getBody()) {
+            drawCircle(graphics, node, Settings.SNAKE_BODY_COLOR);
         }
+        drawCircle(graphics, snake.getHead(), Settings.SNAKE_HEAD_COLOR);
     }
 
     private void drawGridBackground(Graphics graphics) {
-        int size = Settings.DEFAULT_NODE_SIZE;
+        int size = Settings.NODE_SIZE;
         graphics.fillRect(0, 0, grid.getWidth() * size, grid.getHeight() * size);
     }
 
     private void drawSquare(Graphics graphics, Node square, Color color) {
         graphics.setColor(color);
-        int size = Settings.DEFAULT_NODE_SIZE;
+        int size = Settings.NODE_SIZE;
         graphics.fillRect(square.getX() * size, square.getY() * size, size - 1, size - 1);
     }
 
     private void drawCircle(Graphics graphics, Node square, Color color) {
         graphics.setColor(color);
-        int size = Settings.DEFAULT_NODE_SIZE;
+        int size = Settings.NODE_SIZE;
         graphics.fillOval(square.getX() * size, square.getY() * size, size, size);
     }
 

@@ -17,14 +17,6 @@ public class Grid {
 
     private Random random = new Random();
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
     public Grid(int width, int length) {
         this.width = width;
         this.height = length;
@@ -38,18 +30,9 @@ public class Grid {
         createFood();
     }
 
-    public void restart() {
-        for (boolean[] stat : status) {
-            Arrays.fill(stat, false);
-        }
-
-        initSnake();
-        createFood();
-    }
-
     private Snake initSnake() {
         snake = new Snake();
-        for (int i = 0; i < Settings.DEFAULT_INIT_SNAKE_LENGTH; i++) {
+        for (int i = 0; i < Settings.INIT_SNAKE_LENGTH; i++) {
             int x = width / 2 + i;
             int y = height / 2;
             snake.addTail(new Node(x, y));
@@ -67,6 +50,15 @@ public class Grid {
 
         food = new Node(x, y);
         return food;
+    }
+
+    public void restart() {
+        for (boolean[] stat : status) {
+            Arrays.fill(stat, false);
+        }
+
+        initSnake();
+        createFood();
     }
 
     public boolean nextRound() {
@@ -94,8 +86,8 @@ public class Grid {
         status[node.getX()][node.getY()] = true;
     }
 
-    private boolean validPosition(Node area) {
-        int x = area.getX(), y = area.getY();
+    private boolean validPosition(Node node) {
+        int x = node.getX(), y = node.getY();
         return x >= 0 && x < width && y >= 0 && y < height && !status[x][y];
     }
 
@@ -111,5 +103,13 @@ public class Grid {
 
     public Node getFood() {
         return food;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

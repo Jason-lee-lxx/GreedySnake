@@ -25,19 +25,35 @@ public class GameController implements KeyListener, Runnable {
         switch (keyEvent.getKeyCode()) {
             case KeyEvent.VK_UP:
             case KeyEvent.VK_W:
-                grid.changeDirection(Direction.UP);
+                synchronized (this.status) {
+                    if (status == STATUS.RUNNING) {
+                        grid.changeDirection(Direction.UP);
+                    }
+                }
                 break;
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_S:
-                grid.changeDirection(Direction.DOWN);
+                synchronized (this.status) {
+                    if (status == STATUS.RUNNING) {
+                        grid.changeDirection(Direction.DOWN);
+                    }
+                }
                 break;
             case KeyEvent.VK_LEFT:
             case KeyEvent.VK_A:
-                grid.changeDirection(Direction.LEFT);
+                synchronized (this.status) {
+                    if (status == STATUS.RUNNING) {
+                        grid.changeDirection(Direction.LEFT);
+                    }
+                }
                 break;
             case KeyEvent.VK_RIGHT:
             case KeyEvent.VK_D:
-                grid.changeDirection(Direction.RIGHT);
+                synchronized (this.status) {
+                    if (status == STATUS.RUNNING) {
+                        grid.changeDirection(Direction.RIGHT);
+                    }
+                }
                 break;
             case KeyEvent.VK_ENTER:
                 if (status == STATUS.GAMEOVER) {
@@ -78,7 +94,7 @@ public class GameController implements KeyListener, Runnable {
             synchronized (this.status) {
                 while (status == STATUS.RUNNING) {
                     try {
-                        Thread.sleep(Settings.DEFAULT_MOVE_INTERVAL);
+                        Thread.sleep(Settings.MOVE_INTERVAL);
                     } catch (InterruptedException e) {
                         break;
                     }
